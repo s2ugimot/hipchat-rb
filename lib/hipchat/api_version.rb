@@ -182,7 +182,7 @@ module HipChat
       end
     end
 
-    class User
+    class User < ApiVersion
 
       def initialize(options)
         @version = options[:api_version]
