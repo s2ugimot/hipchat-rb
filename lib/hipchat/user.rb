@@ -19,11 +19,15 @@ module HipChat
     #
     # Send a private message to user.
     #
-    def send(message)
+    def send(message, options = {})
+      options ||= {}
+      options = { :notify => false }.merge options
       response = self.class.post(@api.send_config[:url],
                                  :query => { :auth_token => @token },
                                  :body => {
-                                     :message => message
+                                     :message => message,
+                                     :message_format => options[:message_format] || 'text',
+                                     :notify         => @api.bool_val(options[:notify])
                                  }.send(@api.send_config[:body_format]),
                                  :headers => @api.headers
       )
